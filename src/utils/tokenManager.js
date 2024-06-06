@@ -21,6 +21,17 @@ export default class TokenManager {
         return !!localStorage.getItem(accessTokenKey);
     }
 
+    parseToken() {
+        const token = this.getToken();
+        if (!token) {
+            return null;
+        }
+
+        const payload = token.split('.')[1];
+        const decodedPayload = atob(payload);
+        return JSON.parse(decodedPayload);
+    }
+
     getHeaders() {
         return {
             Authorization: `Bearer ${this.getToken()}`,

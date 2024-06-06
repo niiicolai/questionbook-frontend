@@ -12,7 +12,7 @@ export default {
     find: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/groups/${id}` });
+        const req = new Request({ path: `/group/${id}` });
         return await req.get();
     },
 
@@ -79,7 +79,7 @@ export default {
         if (!id) throw new Error('id is required');
         if (!data) throw new Error('data is required');
 
-        const req = new Request({ path: `/groups/${id}` });
+        const req = new Request({ path: `/group/${id}` });
         return await req.put(data);
     },
 
@@ -94,7 +94,7 @@ export default {
     delete: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/groups/${id}` });
+        const req = new Request({ path: `/group/${id}` });
         return await req.delete();
     },
 };

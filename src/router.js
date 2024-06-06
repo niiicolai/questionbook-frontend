@@ -11,12 +11,15 @@ import indexUser from './pages/users/index.js';
 import showUser from './pages/users/show.js';
 
 import login from './pages/auth/login.js';
+import logout from './pages/auth/logout.js';
+
 import home from './pages/home/index.js';
 
 const router = new Navigo('/', { hash: true });
 
 router.on('/', home);
 router.on('/login', login);
+router.on('/logout', logout);
 
 router.on('/groups', indexGroup);
 router.on('/groups/create', createGroup);

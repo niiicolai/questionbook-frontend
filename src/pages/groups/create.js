@@ -1,6 +1,6 @@
 import template from './create.html';
 
-export default function createGroup() {
+export default function createPage() {
     document.getElementById('page').innerHTML = template;
 
     document.getElementById('create-group-form').addEventListener('submit', async (event) => {

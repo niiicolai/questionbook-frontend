@@ -5,7 +5,7 @@ import TokenManager from '../../utils/tokenManager.js';
 
 const tokenManager = new TokenManager();
 
-export default function login() {
+export default function createPage() {
     if (tokenManager.hasToken()) {
         window.location.href = '/';
         return;

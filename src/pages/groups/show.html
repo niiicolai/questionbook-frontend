@@ -1,0 +1,67 @@
+<div class="p-6 flex flex-col gap-3">
+    <div class="border border-gray-300 rounded-md overflow-hidden">
+        <img id="group-cover-image" class="w-full h-32" src="" alt="Group Cover Image">
+    </div>
+
+    <div class="p-6 border border-gray-300 rounded-md">
+        <h2 id="group-name" class="text-4xl font-bold mb-3"></h2>
+        <p id="group-description"></p>
+    </div>
+
+    <div class="flex justify-between gap-3">
+        <div class="p-6 border border-gray-300 rounded-md w-full">
+            <h2 class="text-4xl font-bold mb-3">Questions</h2>
+            <p class="mb-6">
+                Find the latest questions from this group below.
+            </p>
+
+            <div id="questions" class="flex flex-col gap-3"></div>
+            <div class="flex items-center justify-start gap-3">
+                <button id="pg-question-first-page"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 mt-3">First
+                    page</button>
+                <button id="pg-question-previous-page"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 mt-3">Previous page</button>
+                <button id="pg-question-next-page"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 mt-3">Next
+                    page</button>
+                <button id="pg-question-last-page"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 mt-3">Last
+                    page</button>
+                <div id="pg-question-page" class="mt-3 border border-gray-300 p-2 rounded-md">Page: 0</div>
+                <div id="pg-question-pages" class="mt-3 border border-gray-300 p-2 rounded-md">Pages: 0</div>
+                <div id="pg-question-limit" class="mt-3 border border-gray-300 p-2 rounded-md">Limit: 0</div>
+                <div id="pg-question-total" class="mt-3 border border-gray-300 p-2 rounded-md">Total: 0</div>
+            </div>
+        </div>
+
+        <div class="p-6 border border-gray-300 rounded-md w-86">
+            <h2 class="text-xl font-bold mb-3">Members</h2>
+            <p class="mb-6">
+                Find the groups members below.
+            </p>
+
+            <div id="members" class="flex flex-col gap-3"></div>
+            <div class="flex items-center justify-start gap-3">
+                <button id="pg-member-first-page"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 mt-3">First
+                    page</button>
+                <button id="pg-member-previous-page"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 mt-3">Previous page</button>
+                <button id="pg-member-next-page"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 mt-3">Next
+                    page</button>
+                <button id="pg-member-last-page"
+                    class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2 mt-3">Last
+                    page</button>
+
+            </div>
+            <div class="flex items-center justify-start gap-3">
+                <div id="pg-member-page" class="mt-3 border border-gray-300 p-2 rounded-md">Page: 0</div>
+                <div id="pg-member-pages" class="mt-3 border border-gray-300 p-2 rounded-md">Pages: 0</div>
+                <div id="pg-member-limit" class="mt-3 border border-gray-300 p-2 rounded-md">Limit: 0</div>
+                <div id="pg-member-total" class="mt-3 border border-gray-300 p-2 rounded-md">Total: 0</div>
+            </div>
+        </div>
+    </div>
+</div>

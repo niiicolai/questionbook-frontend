@@ -1,5 +1,5 @@
 import template from './show.html';
 
-export default function createGroup() {
+export default function createPage() {
     document.getElementById('page').innerHTML = template;
 }

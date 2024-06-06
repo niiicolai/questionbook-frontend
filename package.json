@@ -1,0 +1,22 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "navigo": "^8.11.1",
+    "serve": "^14.2.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "vite": "^5.2.12",
+    "vite-plugin-html": "^3.2.2"
+  }
+}

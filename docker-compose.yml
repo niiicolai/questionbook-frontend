@@ -1,0 +1,9 @@
+services:
+  frontend:
+    image: frontend:v1.0
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"

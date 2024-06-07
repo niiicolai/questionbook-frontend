@@ -5,14 +5,16 @@ export default {
      * @function find
      * @description Find a group user by id
      * @param {string} id
+     * @param {string} groupId - optional
      * @returns {Promise}
      * @async
      * @throws {Error} id is required
      */
-    find: async function (id) {
+    find: async function (id, groupId=null) {
         if (!id) throw new Error('id is required');
-
-        const req = new Request({ path: `/group_user/${id}` });
+        let path = `/group_user/${id}`;
+        if (groupId) path += `?groupId=${groupId}`;
+        const req = new Request({ path });
         return await req.get();
     },
 
@@ -22,19 +24,23 @@ export default {
      * @param {Object} options
      * @param {number} options.limit
      * @param {number} options.page
+     * @param {string} options.groupId - optional
+     * @param {string} options.userId - optional
      * @returns {Promise}
      * @async
      * @throws {Error} limit must be a number and greater than 0
      * @throws {Error} page must be a number and greater than 0
      */
     findAll: async function (options={}) {
-        const { limit, page } = options;
+        const { limit, page, groupId, userId } = options;
         if (isNaN(limit) || limit < 1) 
             throw new Error('limit must be a number and greater than 0');
         if (isNaN(page) || page < 1)
             throw new Error('page must be a number and greater than 0');
-
-        const req = new Request({ path: `/group_users?limit=${limit}&page=${page}` });
+        let path = `/group_users?limit=${limit}&page=${page}`;
+        if (groupId) path += `&groupId=${groupId}`;
+        if (userId) path += `&userId=${userId}`;
+        const req = new Request({ path });
         return await req.get();
     },
 
@@ -44,21 +50,23 @@ export default {
      * @param {Object} data
      * @param {string} data.groupId
      * @param {string} data.userId
-     * @param {string} data.roleName
      * @returns {Promise}
      * @async
      * @throws {Error} data is required
      * @throws {Error} groupId is required
      * @throws {Error} userId is required
-     * @throws {Error} roleName is required
      */
     create: async function (data) {
         if (!data) throw new Error('data is required');
         if (!data.groupId) throw new Error('groupId is required');
         if (!data.userId) throw new Error('userId is required');
-        if (!data.roleName) throw new Error('roleName is required');
 
-        const req = new Request({ path: `/group_users` });
+        const req = new Request({ 
+            path: `/group_users`,
+            useAuth: true,
+            credentials: 'include',
+            parseJson: false, 
+        });
         return await req.post(data);
     },
 
@@ -69,7 +77,6 @@ export default {
      * @param {Object} data
      * @param {string} data.groupId - optional
      * @param {string} data.userId - optional
-     * @param {string} data.roleName - optional
      * @returns {Promise}
      * @async
      * @throws {Error} id is required
@@ -79,7 +86,12 @@ export default {
         if (!id) throw new Error('id is required');
         if (!data) throw new Error('data is required');
 
-        const req = new Request({ path: `/group_user/${id}` });
+        const req = new Request({ 
+            path: `/group_user/${id}`,
+            useAuth: true,
+            credentials: 'include',
+            parseJson: false, 
+        });
         return await req.put(data);
     },
 
@@ -94,7 +106,12 @@ export default {
     delete: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/group_user/${id}` });
+        const req = new Request({ 
+            path: `/group_user/${id}`,
+            parseJson: false,
+            useAuth: true,
+            credentials: 'include', 
+        });
         return await req.delete();
     },
 };

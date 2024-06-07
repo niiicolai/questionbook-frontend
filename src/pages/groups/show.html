@@ -1,19 +1,38 @@
 <div class="p-6 flex flex-col gap-3">
     <div class="border border-gray-300 rounded-md overflow-hidden">
-        <img id="group-cover-image" class="w-full h-32" src="" alt="Group Cover Image">
+        <img id="group-cover-image" class="w-full h-72 object-cover" src="" alt="Group Cover Image">
     </div>
 
-    <div class="p-6 border border-gray-300 rounded-md">
-        <h2 id="group-name" class="text-4xl font-bold mb-3"></h2>
-        <p id="group-description"></p>
+    <div class="p-6 border border-gray-300 rounded-md flex items-start justify-between gap-3">
+        <div>
+            <h2 id="group-name" class="text-4xl font-bold mb-3"></h2>
+            <p id="group-description"></p>
+        </div>
+
+        <div id="group-actions" class="hidden flex gap-3">
+            <a id="edit-group-link" href="#" class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2">Edit
+                group</a>
+            <button id="delete-group-btn" class="bg-red-500 hover:bg-red-600 text-white rounded-md p-2">Delete
+                group</button>
+        </div>
     </div>
 
     <div class="flex justify-between gap-3">
         <div class="p-6 border border-gray-300 rounded-md w-full">
-            <h2 class="text-4xl font-bold mb-3">Questions</h2>
-            <p class="mb-6">
-                Find the latest questions from this group below.
-            </p>
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <h2 class="text-4xl font-bold mb-3">Questions</h2>
+                    <p class="mb-6">
+                        Find the latest questions from this group below.
+                    </p>
+                </div>
+
+                <div id="question-actions" class="flex gap-3">
+                    <a id="create-question-link" href="/questions/create"
+                        class="hidden bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2">Create
+                        question</a>
+                </div>
+            </div>
 
             <div id="questions" class="flex flex-col gap-3"></div>
             <div class="flex items-center justify-start gap-3">
@@ -36,10 +55,24 @@
         </div>
 
         <div class="p-6 border border-gray-300 rounded-md w-86">
-            <h2 class="text-xl font-bold mb-3">Members</h2>
-            <p class="mb-6">
-                Find the groups members below.
-            </p>
+
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <h2 class="text-xl font-bold mb-3">Members</h2>
+                    <p class="mb-6">
+                        Find the groups members below.
+                    </p>
+                </div>
+
+                <div id="member-actions" class="flex gap-3">
+                    <button id="join-group-btn"
+                        class="hidden bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2">Join
+                        group</button>
+                    <button id="leave-group-btn"
+                        class="hidden bg-red-500 hover:bg-red-600 text-white rounded-md p-2">Leave
+                        group</button>
+                </div>
+            </div>
 
             <div id="members" class="flex flex-col gap-3"></div>
             <div class="flex items-center justify-start gap-3">

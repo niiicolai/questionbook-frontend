@@ -42,7 +42,7 @@ export default class Request {
     async _fetch(method, data=null) {
         const opt = this.options(method, data);
         const response = await fetch(this.path, opt);
-        
+
         if (this.parseJson) {
             return await response.json();
         } else {

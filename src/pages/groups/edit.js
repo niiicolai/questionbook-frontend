@@ -12,7 +12,7 @@ export default async function createPage() {
         createToast({ message: 'Group id must be a number', type: 'error', duration: 3000 });
         return;
     }
-    const group = await api.group.find(groupId);
+    const { group } = await api.group.find(groupId);
     if (!group) {
         createToast({ message: 'Group not found', type: 'error', duration: 3000 });
         return;
@@ -22,6 +22,8 @@ export default async function createPage() {
 
     const image = await api.image.find(group.coverUrl);
     document.getElementById('cover-image').src = image;
+
+    document.getElementById('back-link').href = '/group/' + groupId;
     
     form.addEventListener('submit', async (event) => {
         event.preventDefault();

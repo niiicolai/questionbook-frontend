@@ -45,18 +45,21 @@ export default {
      * @param {string} data.name
      * @param {string} data.description
      * @param {string} data.coverUrl
+     * @param {boolean} data.isPrivate
      * @returns {Promise}
      * @async
      * @throws {Error} data is required
      * @throws {Error} name is required
      * @throws {Error} description is required
      * @throws {Error} coverUrl is required
+     * @throws {Error} isPrivate must be a boolean
      */
     create: async function (data) {
         if (!data) throw new Error('data is required');
         if (!data.name) throw new Error('name is required');
         if (!data.description) throw new Error('description is required');
         if (!data.coverUrl) throw new Error('coverUrl is required');
+        if (typeof data.isPrivate !== 'boolean') throw new Error('isPrivate must be a boolean');
 
         const req = new Request({ 
             path: `/groups`, 
@@ -75,6 +78,7 @@ export default {
      * @param {string} data.name - optional
      * @param {string} data.description - optional
      * @param {string} data.coverUrl - optional
+     * @param {string} data.isPrivate - optional
      * @returns {Promise}
      * @async
      * @throws {Error} id is required

@@ -80,7 +80,7 @@ export default {
     update: async function (id, data) {
         if (!id) throw new Error('id is required');
         if (!data) throw new Error('data is required');
-
+        
         const req = new Request({ 
             path: `/comment/${id}`,
             useAuth: true,

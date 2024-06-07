@@ -59,8 +59,9 @@ const answerPaginator = new Paginator({
             div.querySelector('.comment-created-at').textContent = new Date(row.createdAt).toLocaleString();
             div.querySelector('.comment-updated-at').textContent = new Date(row.updatedAt).toLocaleString();
             div.querySelector('.comment-user').textContent = row.username;
-            div.querySelector('.comment-edit-link').href = `/edit/${row.id}`;
+            div.querySelector('.comment-edit-link').href = `/comment/${row.id}/edit`;
             div.querySelector('.comment-delete-btn').addEventListener('click', () => deleteComment(row.id));
+            div.querySelector('.comment-actions').classList.toggle('hidden', userId !== row.userId);
         }
     }),
     limit: 10,
@@ -131,7 +132,7 @@ export default async function createPage() {
         const isMember = rows.length > 0;
 
         document.getElementById('create-comment-link').classList.toggle('hidden', !isMember);
-        document.getElementById('create-comment-link').href = `/comment/create?answerId=${answerId}`;
+        document.getElementById('create-comment-link').href = `/comments/create?answerId=${answerId}`;
     }
 
     answerPaginator.fetch();

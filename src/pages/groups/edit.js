@@ -19,6 +19,7 @@ export default async function createPage() {
     }
     form.name.value = group.name;
     form.description.value = group.description;
+    document.getElementById('isPrivate').checked = group.isPrivate;
 
     const image = await api.image.find(group.coverUrl);
     document.getElementById('cover-image').src = image;
@@ -32,6 +33,8 @@ export default async function createPage() {
         const name = formData.get('name');
         const description = formData.get('description');
         const file = formData.get('file');
+        let isPrivate = formData.get('isPrivate');
+        isPrivate = isPrivate === 'on' ? 1 : 0;
 
         try {
             // Upload image
@@ -51,6 +54,7 @@ export default async function createPage() {
             if (name !== group.name) params.name = name;
             if (description !== group.description) params.description = description;
             if (coverUrl) params.coverUrl = coverUrl;
+            if (isPrivate !== group.isPrivate) params.isPrivate = isPrivate;
             const groupResponse = await api.group.update(groupId, params);
             const data = await groupResponse.json();
 

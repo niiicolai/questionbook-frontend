@@ -1,7 +1,6 @@
 import template from './edit.html';
 import api from '../../sdks/api/main.js';
 import createToast from '../../toast/toast.js';
-import { v4 as uuidv4 } from 'uuid';
 
 export default async function createPage() {
     document.getElementById('page').innerHTML = template;

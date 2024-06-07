@@ -25,6 +25,8 @@ const requestMethod = async (options) => {
         div.innerHTML = groupListItemTemplate;
         div.querySelector('.group-name').textContent = row.name;
         div.querySelector('.group-view-link').href = `/group/${row.id}`;
+        div.querySelector('.group-created-at').textContent = new Date(row.createdAt).toLocaleString();
+        div.querySelector('.group-updated-at').textContent = new Date(row.updatedAt).toLocaleString();
         clone.appendChild(div);
     }
     document.getElementById('groups').innerHTML = clone.innerHTML;

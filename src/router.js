@@ -5,10 +5,19 @@ import editGroup from './pages/groups/edit.js';
 import indexGroup from './pages/groups/index.js';
 import showGroup from './pages/groups/show.js';
 
+import createQuestion from './pages/questions/create.js';
+import editQuestion from './pages/questions/edit.js';
+import showQuestion from './pages/questions/show.js';
+
+import createAnswer from './pages/answers/create.js';
+import editAnswer from './pages/answers/edit.js';
+import showAnswer from './pages/answers/show.js';
+
+import createComment from './pages/comments/create.js';
+import editComment from './pages/comments/edit.js';
+
 import createUser from './pages/users/create.js';
 import editUser from './pages/users/edit.js';
-import indexUser from './pages/users/index.js';
-import showUser from './pages/users/show.js';
 
 import login from './pages/auth/login.js';
 import logout from './pages/auth/logout.js';
@@ -26,10 +35,19 @@ router.on('/groups/create', createGroup);
 router.on('/group/:id/edit', editGroup);
 router.on('/group/:id', showGroup);
 
-router.on('/users', indexUser);
+router.on('/questions/create', createQuestion);
+router.on('/question/:id/edit', editQuestion);
+router.on('/question/:id', showQuestion);
+
+router.on('/answers/create', createAnswer);
+router.on('/answer/:id/edit', editAnswer);
+router.on('/answer/:id', showAnswer);
+
+router.on('/comments/create', createComment);
+router.on('/comment/:id/edit', editComment);
+
 router.on('/users/create', createUser);
-router.on('/user/:id/edit', editUser);
-router.on('/user/:id', showUser);
+router.on('/user/edit', editUser);
 
 router.resolve();
 

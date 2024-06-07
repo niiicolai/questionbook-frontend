@@ -22,19 +22,21 @@ export default {
      * @param {Object} options
      * @param {number} options.limit
      * @param {number} options.page
+     * @param {string} options.answerId
      * @returns {Promise}
      * @async
      * @throws {Error} limit must be a number and greater than 0
      * @throws {Error} page must be a number and greater than 0
      */
     findAll: async function (options={}) {
-        const { limit, page } = options;
+        const { limit, page, answerId } = options;
         if (isNaN(limit) || limit < 1) 
             throw new Error('limit must be a number and greater than 0');
         if (isNaN(page) || page < 1)
             throw new Error('page must be a number and greater than 0');
-
-        const req = new Request({ path: `/comments?limit=${limit}&page=${page}` });
+        let path = `/comments?limit=${limit}&page=${page}`;
+        if (answerId) path += `&answerId=${answerId}`;
+        const req = new Request({ path });
         return await req.get();
     },
 
@@ -55,7 +57,12 @@ export default {
         if (!data.description) throw new Error('description is required');
         if (!data.answerId) throw new Error('answerId is required');
 
-        const req = new Request({ path: `/comments` });
+        const req = new Request({ 
+            path: `/comments`,
+            useAuth: true,
+            credentials: 'include',
+            parseJson: false,    
+        });
         return await req.post(data);
     },
 
@@ -74,8 +81,13 @@ export default {
         if (!id) throw new Error('id is required');
         if (!data) throw new Error('data is required');
 
-        const req = new Request({ path: `/comment/${id}` });
-        return await req.put(data);
+        const req = new Request({ 
+            path: `/comment/${id}`,
+            useAuth: true,
+            credentials: 'include',
+            parseJson: false,   
+        });
+        return await req.patch(data);
     },
 
     /**
@@ -89,7 +101,12 @@ export default {
     delete: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/comment/${id}` });
+        const req = new Request({ 
+            path: `/comment/${id}`,
+            useAuth: true,
+            credentials: 'include',
+            parseJson: false,  
+        });
         return await req.delete();
     },
 };

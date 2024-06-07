@@ -3,16 +3,16 @@ import Request from "../../../utils/request.js";
 export default {
     /**
      * @function find
-     * @description Find an user by id
-     * @param {string} id
+     * @description Find the current user
      * @returns {Promise}
      * @async
-     * @throws {Error} id is required
      */
-    find: async function (id) {
-        if (!id) throw new Error('id is required');
-
-        const req = new Request({ path: `/user/${id}` });
+    find: async function () {
+        const req = new Request({ 
+            path: `/user`,
+            useAuth: true,
+            credentials: 'include', 
+        });
         return await req.get();
     },
 
@@ -65,36 +65,39 @@ export default {
     /**
      * @function update
      * @description Update an user
-     * @param {string} id
      * @param {Object} data
      * @param {string} data.username - optional
      * @param {string} data.email - optional
      * @param {string} data.password - optional
      * @returns {Promise}
      * @async
-     * @throws {Error} id is required
      * @throws {Error} data is required
      */
-    update: async function (id, data) {
-        if (!id) throw new Error('id is required');
+    update: async function (data) {
         if (!data) throw new Error('data is required');
 
-        const req = new Request({ path: `/user/${id}` });
-        return await req.put(data);
+        const req = new Request({ 
+            path: `/user`,
+            parseJson: false,
+            useAuth: true,
+            credentials: 'include', 
+        });
+        return await req.patch(data);
     },
 
     /**
      * @function delete
      * @description Delete an user
-     * @param {string} id
      * @returns {Promise}
      * @async
-     * @throws {Error} id is required
      */
-    delete: async function (id) {
-        if (!id) throw new Error('id is required');
-
-        const req = new Request({ path: `/group/${id}` });
+    delete: async function () {
+        const req = new Request({ 
+            path: `/user`,
+            parseJson: false,
+            useAuth: true,
+            credentials: 'include', 
+        });
         return await req.delete();
     },
 };

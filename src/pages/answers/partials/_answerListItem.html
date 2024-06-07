@@ -1,4 +1,24 @@
 <div class="flex items-center justify-between p-3 border border-gray-300 group-item rounded-md">
-    <p class="answer-description"></p>
-    <p class="answer-user"></p>
+    <div>
+        <p class="font-bold">Answer:</p>
+        <p class="answer-description w-full"></p>
+    </div>
+    <div class="flex gap-3">
+        <div class="text-center">
+            <p class="font-bold">Created at:</p>
+            <p class="answer-created-at"></p>
+        </div>
+        <div class="text-center">
+            <p class="font-bold">Updated at:</p>
+            <p class="answer-updated-at"></p>
+        </div>
+        <div class="text-center">
+            <p class="font-bold">Answered by:</p>
+            <p class="answer-user"></p>
+        </div>
+        <div class="text-center answer-actions">
+            <p class="font-bold">Actions:</p>
+            <a class="answer-view-link text-blue-500 hover:underline">View</a>
+        </div>
+    </div>
 </div>

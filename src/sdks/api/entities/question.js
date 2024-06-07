@@ -58,7 +58,12 @@ export default {
         if (!data.description) throw new Error('description is required');
         if (!data.groupId) throw new Error('groupId is required');
 
-        const req = new Request({ path: `/questions` });
+        const req = new Request({ 
+            path: `/questions`,
+            useAuth: true,
+            credentials: 'include',
+            parseJson: false, 
+        });
         return await req.post(data);
     },
 
@@ -78,8 +83,13 @@ export default {
         if (!id) throw new Error('id is required');
         if (!data) throw new Error('data is required');
 
-        const req = new Request({ path: `/question/${id}` });
-        return await req.put(data);
+        const req = new Request({ 
+            path: `/question/${id}`,
+            useAuth: true,
+            credentials: 'include',
+            parseJson: false,  
+        });
+        return await req.patch(data);
     },
 
     /**
@@ -93,7 +103,12 @@ export default {
     delete: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/question/${id}` });
+        const req = new Request({ 
+            path: `/question/${id}`,
+            useAuth: true,
+            credentials: 'include',
+            parseJson: false,  
+        });
         return await req.delete();
     },
 };

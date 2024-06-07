@@ -56,6 +56,8 @@ const questionPaginator = new Paginator({
         onItem: (div, row) => {
             div.querySelector('.question-title').textContent = inputSanitizer.clean(row.title);
             div.querySelector('.question-user').textContent = row.username;
+            div.querySelector('.question-created-at').textContent = new Date(row.createdAt).toLocaleString();
+            div.querySelector('.question-updated-at').textContent = new Date(row.updatedAt).toLocaleString();
             div.querySelector('.question-view-link').href = `/question/${row.id}`;
         }
     }),
@@ -120,10 +122,12 @@ export default async function createPage() {
     const imageBase64 = await api.image.find(group.coverUrl);
 
     const tokenManager = new TokenManager();
+    let isOwner = false;
     if (tokenManager.hasToken()) {
         const parsedToken = tokenManager.parseToken();
         userId = parsedToken.sub;
-        if (userId === owner.id) {
+        isOwner = userId === owner.id;
+        if (isOwner) {
             document.getElementById('delete-group-btn').addEventListener('click', () => deleteGroup(groupId));
             document.getElementById('edit-group-link').href = `/group/${group.id}/edit`;
             document.getElementById('group-actions').classList.remove('hidden');
@@ -133,14 +137,23 @@ export default async function createPage() {
     if (userId) {
         const { rows } = await api.groupUser.findAll({ limit: 1, page: 1, groupId, userId });
         const isMember = rows.length > 0;
-        const joinBtn = document.getElementById('join-group-btn');
-        const leaveBtn = document.getElementById('leave-group-btn');
-        joinBtn.classList.toggle('hidden', isMember);
-        leaveBtn.classList.toggle('hidden', !isMember);
-        joinBtn.addEventListener('click', joinGroup);
-        leaveBtn.addEventListener('click', leaveGroup);
+        const showJoinBtn = !isMember && !isOwner;
+        const showLeaveBtn = isMember && !isOwner;
+        if (showJoinBtn) {
+            const joinBtn = document.getElementById('join-group-btn');
+            joinBtn.classList.toggle('hidden', showJoinBtn);
+            joinBtn.addEventListener('click', joinGroup);
+        }
 
-        document.getElementById('create-question-link').classList.toggle('hidden', !isMember);
+        if (showLeaveBtn) {
+            const leaveBtn = document.getElementById('leave-group-btn');
+            leaveBtn.classList.toggle('hidden', showLeaveBtn);
+            leaveBtn.addEventListener('click', leaveGroup);
+        }
+
+        const createQuestionLink = document.getElementById('create-question-link');
+        createQuestionLink.href = `/questions/create?groupId=${groupId}`;
+        createQuestionLink.classList.toggle('hidden', !isMember);
     }
 
     document.getElementById('group-cover-image').src = imageBase64;

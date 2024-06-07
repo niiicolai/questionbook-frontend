@@ -1,4 +1,23 @@
 <div class="flex items-center justify-between p-3 border border-gray-300 group-item rounded-md">
-    <p class="comment-description"></p>
-    <p class="comment-user"></p>
+    <div>
+        <p class="comment-user inline font-bold italic"></p>:
+        <p class="comment-description w-full"></p>
+    </div>
+    <div class="flex gap-3">
+        <div class="text-center">
+            <p class="font-bold">Created at:</p>
+            <p class="comment-created-at"></p>
+        </div>
+        <div class="text-center">
+            <p class="font-bold">Updated at:</p>
+            <p class="comment-updated-at"></p>
+        </div>
+        <div class="text-center hidden comment-actions">
+            <p class="font-bold">Actions:</p>
+            <div>
+                <a class="comment-edit-link text-blue-500 hover:underline">Edit</a>
+                <button class="comment-delete-btn text-red-500 hover:underline">Delete</button>
+            </div>
+        </div>
+    </div>
 </div>

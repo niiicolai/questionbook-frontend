@@ -3,7 +3,7 @@ import Request from "../../../utils/request.js";
 export default {
     /**
      * @function find
-     * @description Find a group by id
+     * @description Find a group user by id
      * @param {string} id
      * @returns {Promise}
      * @async
@@ -12,13 +12,13 @@ export default {
     find: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/group/${id}` });
+        const req = new Request({ path: `/group_user/${id}` });
         return await req.get();
     },
 
     /**
      * @function findAll
-     * @description Find all groups
+     * @description Find all group users
      * @param {Object} options
      * @param {number} options.limit
      * @param {number} options.page
@@ -34,47 +34,42 @@ export default {
         if (isNaN(page) || page < 1)
             throw new Error('page must be a number and greater than 0');
 
-        const req = new Request({ path: `/groups?limit=${limit}&page=${page}` });
+        const req = new Request({ path: `/group_users?limit=${limit}&page=${page}` });
         return await req.get();
     },
 
     /**
      * @function create
-     * @description Create a group
+     * @description Create a group user
      * @param {Object} data
-     * @param {string} data.name
-     * @param {string} data.description
-     * @param {string} data.coverUrl
+     * @param {string} data.groupId
+     * @param {string} data.userId
+     * @param {string} data.roleName
      * @returns {Promise}
      * @async
      * @throws {Error} data is required
-     * @throws {Error} name is required
-     * @throws {Error} description is required
-     * @throws {Error} coverUrl is required
+     * @throws {Error} groupId is required
+     * @throws {Error} userId is required
+     * @throws {Error} roleName is required
      */
     create: async function (data) {
         if (!data) throw new Error('data is required');
-        if (!data.name) throw new Error('name is required');
-        if (!data.description) throw new Error('description is required');
-        if (!data.coverUrl) throw new Error('coverUrl is required');
+        if (!data.groupId) throw new Error('groupId is required');
+        if (!data.userId) throw new Error('userId is required');
+        if (!data.roleName) throw new Error('roleName is required');
 
-        const req = new Request({ 
-            path: `/groups`, 
-            parseJson: false, 
-            useAuth: true,
-            credentials: 'include',
-        });
+        const req = new Request({ path: `/group_users` });
         return await req.post(data);
     },
 
     /**
      * @function update
-     * @description Update a group
+     * @description Update a group user
      * @param {string} id
      * @param {Object} data
-     * @param {string} data.name - optional
-     * @param {string} data.description - optional
-     * @param {string} data.coverUrl - optional
+     * @param {string} data.groupId - optional
+     * @param {string} data.userId - optional
+     * @param {string} data.roleName - optional
      * @returns {Promise}
      * @async
      * @throws {Error} id is required
@@ -84,18 +79,13 @@ export default {
         if (!id) throw new Error('id is required');
         if (!data) throw new Error('data is required');
 
-        const req = new Request({ 
-            path: `/group/${id}`, 
-            parseJson: false, 
-            useAuth: true,
-            credentials: 'include',
-        });
-        return await req.patch(data);
+        const req = new Request({ path: `/group_user/${id}` });
+        return await req.put(data);
     },
 
     /**
      * @function delete
-     * @description Delete a group
+     * @description Delete a group user
      * @param {string} id
      * @returns {Promise}
      * @async
@@ -104,12 +94,7 @@ export default {
     delete: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ 
-            path: `/group/${id}`, 
-            parseJson: false, 
-            useAuth: true,
-            credentials: 'include', 
-        });
+        const req = new Request({ path: `/group_user/${id}` });
         return await req.delete();
     },
 };

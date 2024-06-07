@@ -15,7 +15,11 @@ export default {
         if (!email) throw new Error('email is required');
         if (!password) throw new Error('password is required');
 
-        const req = new Request({ path: `/auth`, parseJson: false });
+        const req = new Request({ 
+            path: `/auth`, 
+            parseJson: false,
+            credentials: 'include', 
+        });
         return await req.post({ email, password });
     },
 };

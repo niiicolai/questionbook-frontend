@@ -6,7 +6,8 @@ export default class Paginator {
         if (!options.limit) throw new Error('Limit is required');
         if (options.page < 1) throw new Error('Page must be greater than 0');
         if (options.limit < 1) throw new Error('Limit must be greater than 0');
-        if (typeof options.requestMethod !== 'function') throw new Error('Request method must be a function');
+       
+        if (typeof options.requestMethod !== 'function' && typeof options.requestMethod !== 'Promise') throw new Error('Request method must be a function');
 
         this.page = options.page;
         this.limit = options.limit;

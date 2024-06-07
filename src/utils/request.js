@@ -7,9 +7,11 @@ export function setTokenManager(manager) {
 const serverUrl = import.meta.env.VITE_API_URL;
 
 export default class Request {
-    constructor({path, parseJson=true, useAuth=false}) {
+    constructor({path, parseJson=true, stringifyBody=true, credentials=null, useAuth=false}) {
         this.path = `${serverUrl}${path}`;
         this.parseJson = parseJson;
+        this.stringifyBody = stringifyBody;
+        this.credentials = credentials;
 
         if (useAuth) {
             this.headers = {
@@ -25,9 +27,14 @@ export default class Request {
             method: method,
             headers: this.headers,
         };
-        if (data) {
+        if (this.credentials) {
+            opt.credentials = this.credentials;
+        }
+        if (data && this.stringifyBody) {
             opt.body = JSON.stringify(data);
             opt.headers['Content-Type'] = 'application/json';
+        } else if (data) {
+            opt.body = data;
         }
         return opt;
     }
@@ -49,6 +56,10 @@ export default class Request {
 
     async post(data) {
         return await this._fetch('POST', data);
+    }
+
+    async patch(data) {
+        return await this._fetch('PATCH', data);
     }
 
     async put(data) {

@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "navigo": "^8.11.1",
-    "serve": "^14.2.3"
+    "serve": "^14.2.3",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "dotenv": "^16.4.5",

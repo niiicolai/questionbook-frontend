@@ -1,4 +1,4 @@
-import layout from './layout.html';
+import layout from './layout.html?raw';
 import TokenManager from '../utils/tokenManager.js';
 
 const clone = document.createElement('div');

@@ -1,5 +1,5 @@
-import template from './show.html';
-import commentListItemTemplate from '../comments/partials/_commentListItem.html';
+import template from './show.html?raw';
+import commentListItemTemplate from '../comments/partials/_commentListItem.html?raw';
 import Paginator from '../../utils/paginator.js';
 import api from '../../sdks/api/main.js';
 import TokenManager from '../../utils/tokenManager.js';

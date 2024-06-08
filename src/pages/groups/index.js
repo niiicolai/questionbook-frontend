@@ -1,5 +1,5 @@
-import template from './index.html';
-import groupListItemTemplate from './partials/_groupListItem.html';
+import template from './index.html?raw';
+import groupListItemTemplate from './partials/_groupListItem.html?raw';
 import Paginator from '../../utils/paginator.js';
 import api from '../../sdks/api/main.js';
 

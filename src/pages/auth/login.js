@@ -1,4 +1,4 @@
-import template from './login.html';
+import template from './login.html?raw';
 import api from '../../sdks/api/main.js';
 import createToast from '../../toast/toast.js';
 import TokenManager from '../../utils/tokenManager.js';

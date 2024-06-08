@@ -1,4 +1,4 @@
-import template from './create.html';
+import template from './create.html?raw';
 import api from '../../sdks/api/main.js';
 import createToast from '../../toast/toast.js';
 

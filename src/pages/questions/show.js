@@ -1,5 +1,5 @@
-import template from './show.html';
-import answerListItemTemplate from '../answers/partials/_answerListItem.html';
+import template from './show.html?raw';
+import answerListItemTemplate from '../answers/partials/_answerListItem.html?raw';
 import Paginator from '../../utils/paginator.js';
 import api from '../../sdks/api/main.js';
 import TokenManager from '../../utils/tokenManager.js';

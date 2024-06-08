@@ -1,4 +1,4 @@
-import template from './edit.html';
+import template from './edit.html?raw';
 import api from '../../sdks/api/main.js';
 import createToast from '../../toast/toast.js';
 import TokenManager from '../../utils/tokenManager.js';

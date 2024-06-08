@@ -1,4 +1,4 @@
-import template from './toast.html';
+import template from './toast.html?raw';
 
 const typeToCss = {
     error: 'bg-red-500 text-white',

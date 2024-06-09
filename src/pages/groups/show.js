@@ -93,7 +93,7 @@ const deleteGroup = async () => {
 }
 
 const joinGroup = async () => {
-    const response = await api.groupUser.create({ groupId, userId });
+    const response = await api.groupUser.create({ groupId });
     if (response.status === 200) {
         window.location.reload();
     } else {
@@ -102,9 +102,7 @@ const joinGroup = async () => {
 }
 
 const leaveGroup = async () => {
-    const { rows } = await api.groupUser.findAll({ limit: 1, page: 1, groupId, userId });
-    const { id } = rows[0];
-    const response = await api.groupUser.delete(id);
+    const response = await api.groupUser.delete(groupId);
 
     if (response.status === 204) {
         window.location.reload();
@@ -121,13 +119,14 @@ export default async function createPage() {
     const { group, owner } = await api.group.find(groupId);
     const imageBase64 = await api.image.find(group.coverUrl);
 
+    const { hasPermission: bypass } = await api.user.hasGlobalPermissions('group:bypass:membership');
     const tokenManager = new TokenManager();
     let isOwner = false;
     if (tokenManager.hasToken()) {
         const parsedToken = tokenManager.parseToken();
         userId = parsedToken.sub;
         isOwner = userId === owner.id;
-        if (isOwner) {
+        if (isOwner || bypass) {
             document.getElementById('delete-group-btn').addEventListener('click', () => deleteGroup(groupId));
             document.getElementById('edit-group-link').href = `/group/${group.id}/edit`;
             document.getElementById('group-actions').classList.remove('hidden');
@@ -135,24 +134,27 @@ export default async function createPage() {
     }
 
     if (userId) {
-        const { isMember } = await api.group.isMember(groupId);
-        const showJoinBtn = !isMember && !isOwner;
-        const showLeaveBtn = isMember && !isOwner;
+        const { isMember } = await api.group.isMember(groupId);        
+
+        const showJoinBtn = (!isMember && !isOwner);
+        const showLeaveBtn = (isMember && !isOwner);
+        console.log({ showJoinBtn, showLeaveBtn, isMember, bypass });
         if (showJoinBtn) {
             const joinBtn = document.getElementById('join-group-btn');
-            joinBtn.classList.toggle('hidden', showJoinBtn);
+            joinBtn.classList.toggle('hidden', !showJoinBtn);
             joinBtn.addEventListener('click', joinGroup);
         }
 
         if (showLeaveBtn) {
             const leaveBtn = document.getElementById('leave-group-btn');
-            leaveBtn.classList.toggle('hidden', showLeaveBtn);
+            leaveBtn.classList.toggle('hidden', !showLeaveBtn);
             leaveBtn.addEventListener('click', leaveGroup);
         }
 
+        const showQuestionLink = isMember || bypass;
         const createQuestionLink = document.getElementById('create-question-link');
         createQuestionLink.href = `/questions/create?groupId=${groupId}`;
-        createQuestionLink.classList.toggle('hidden', !isMember);
+        createQuestionLink.classList.toggle('hidden', !showQuestionLink);
     }
 
     document.getElementById('group-cover-image').src = imageBase64;

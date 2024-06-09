@@ -96,15 +96,15 @@ export default async function createPage() {
     document.getElementById('to-group-link').href = `/group/${question.groupId}`;
 
     groupId = question.groupId;
-    const { group, owner } = await api.group.find(groupId);
 
+    const { hasPermission: bypass } = await api.user.hasGlobalPermissions('group:bypass:membership');
     const tokenManager = new TokenManager();
     let isOwner = false;
     if (tokenManager.hasToken()) {
         const parsedToken = tokenManager.parseToken();
         userId = parsedToken.sub;
         isOwner = userId === question.userId;
-        if (isOwner) {
+        if (isOwner || bypass) {
             document.getElementById('delete-question-btn').addEventListener('click', () => deleteQuestion(questionId));
             document.getElementById('edit-question-link').href = `/question/${question.id}/edit`;
             document.getElementById('edit-question-link').classList.remove('hidden');
@@ -114,8 +114,8 @@ export default async function createPage() {
 
     if (userId) {
         const { isMember } = await api.group.isMember(groupId);
-
-        document.getElementById('create-answer-link').classList.toggle('hidden', !isMember);
+        const showCreateAnswerLink = isMember || bypass;
+        document.getElementById('create-answer-link').classList.toggle('hidden', !showCreateAnswerLink);
         document.getElementById('create-answer-link').href = `/answers/create?questionId=${questionId}`;
     }
 

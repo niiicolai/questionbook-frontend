@@ -38,6 +38,16 @@ export default {
         return await req.get();
     },
 
+    hasGlobalPermissions: async function (permissions) {
+        if (!permissions) throw new Error('permissions is required');
+
+        const req = new Request({ 
+            path: `/user-has-global-permission/${permissions}`,
+            useAuth: true,
+        });
+        return await req.get();
+    },
+
     /**
      * @function create
      * @description Create an user

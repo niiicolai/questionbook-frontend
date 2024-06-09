@@ -10,6 +10,7 @@ let questionId;
 let answerId;
 let groupId;
 let userId;
+let bypass;
 
 const inputSanitizer = new InputSanitizer();
 
@@ -61,7 +62,8 @@ const answerPaginator = new Paginator({
             div.querySelector('.comment-user').textContent = row.username;
             div.querySelector('.comment-edit-link').href = `/comment/${row.id}/edit`;
             div.querySelector('.comment-delete-link').href = `/comment/${row.id}/delete`;
-            div.querySelector('.comment-actions').classList.toggle('hidden', userId !== row.userId);
+            const showEditDelete = bypass || userId === row.userId;
+            div.querySelector('.comment-actions').classList.toggle('hidden', !showEditDelete);
         }
     }),
     limit: 10,
@@ -101,7 +103,9 @@ export default async function createPage() {
 
     const question = await api.question.find(answer.questionId);
     groupId = question.groupId;
-    const { group, owner } = await api.group.find(groupId);
+
+    const { hasPermission } = await api.user.hasGlobalPermissions('group:bypass:membership');
+    bypass = hasPermission;
 
     const tokenManager = new TokenManager();
     let isOwner = false;
@@ -109,7 +113,7 @@ export default async function createPage() {
         const parsedToken = tokenManager.parseToken();
         userId = parsedToken.sub;
         isOwner = userId === answer.userId;
-        if (isOwner) {
+        if (isOwner || bypass) {
             document.getElementById('delete-answer-btn').addEventListener('click', () => deleteAnswer(questionId));
             document.getElementById('edit-answer-link').href = `/answer/${answer.id}/edit`;
             document.getElementById('edit-answer-link').classList.remove('hidden');
@@ -119,8 +123,8 @@ export default async function createPage() {
 
     if (userId) {
         const { isMember } = await api.group.isMember(groupId);
-
-        document.getElementById('create-comment-link').classList.toggle('hidden', !isMember);
+        const showCreateCommentLink = isMember || bypass;
+        document.getElementById('create-comment-link').classList.toggle('hidden', !showCreateCommentLink);
         document.getElementById('create-comment-link').href = `/comments/create?answerId=${answerId}`;
     }
 

@@ -60,22 +60,13 @@ const answerPaginator = new Paginator({
             div.querySelector('.comment-updated-at').textContent = new Date(row.updatedAt).toLocaleString();
             div.querySelector('.comment-user').textContent = row.username;
             div.querySelector('.comment-edit-link').href = `/comment/${row.id}/edit`;
-            div.querySelector('.comment-delete-btn').addEventListener('click', () => deleteComment(row.id));
+            div.querySelector('.comment-delete-link').href = `/comment/${row.id}/delete`;
             div.querySelector('.comment-actions').classList.toggle('hidden', userId !== row.userId);
         }
     }),
     limit: 10,
     page: 1,
 });
-
-const deleteComment = async (id) => {
-    const response = await api.comment.delete(id);
-    if (response.status === 204) {
-        answerPaginator.fetch();
-    } else {
-        createToast({ message: 'Failed to delete comment', type: 'error', duration: 3000 });
-    }
-}
 
 const deleteAnswer = async () => {
     const response = await api.answer.delete(answerId);
@@ -101,10 +92,9 @@ export default async function createPage() {
     }
 
     questionId = answer.questionId;
-    const answerUser = await api.user.find(answer.userId);
 
     document.getElementById('answer-description').innerText = inputSanitizer.clean(answer.description);
-    document.getElementById('answer-user').innerText = answerUser.username;
+    document.getElementById('answer-user').innerText = inputSanitizer.clean(answer.username);
     document.getElementById('answer-created-at').innerText = new Date(answer.createdAt).toLocaleString();
     document.getElementById('answer-updated-at').innerText = new Date(answer.updatedAt).toLocaleString();
     document.getElementById('to-question-link').href = `/question/${answer.questionId}`;
@@ -118,7 +108,7 @@ export default async function createPage() {
     if (tokenManager.hasToken()) {
         const parsedToken = tokenManager.parseToken();
         userId = parsedToken.sub;
-        isOwner = userId === question.userId;
+        isOwner = userId === answer.userId;
         if (isOwner) {
             document.getElementById('delete-answer-btn').addEventListener('click', () => deleteAnswer(questionId));
             document.getElementById('edit-answer-link').href = `/answer/${answer.id}/edit`;
@@ -128,8 +118,7 @@ export default async function createPage() {
     }
 
     if (userId) {
-        const { rows } = await api.groupUser.findAll({ limit: 1, page: 1, groupId, userId });
-        const isMember = rows.length > 0;
+        const { isMember } = await api.group.isMember(groupId);
 
         document.getElementById('create-comment-link').classList.toggle('hidden', !isMember);
         document.getElementById('create-comment-link').href = `/comments/create?answerId=${answerId}`;

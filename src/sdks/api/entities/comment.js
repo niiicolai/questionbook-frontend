@@ -12,7 +12,10 @@ export default {
     find: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/comment/${id}` });
+        const req = new Request({ 
+            path: `/comment/${id}`,
+            useSoftAuth: true,  
+        });
         return await req.get();
     },
 
@@ -36,7 +39,10 @@ export default {
             throw new Error('page must be a number and greater than 0');
         let path = `/comments?limit=${limit}&page=${page}`;
         if (answerId) path += `&answerId=${answerId}`;
-        const req = new Request({ path });
+        const req = new Request({ 
+            path,
+            useSoftAuth: true,  
+        });
         return await req.get();
     },
 
@@ -60,8 +66,8 @@ export default {
         const req = new Request({ 
             path: `/comments`,
             useAuth: true,
-            credentials: 'include',
-            parseJson: false,    
+            parseJson: false,  
+            useCsrf: true,    
         });
         return await req.post(data);
     },
@@ -84,8 +90,8 @@ export default {
         const req = new Request({ 
             path: `/comment/${id}`,
             useAuth: true,
-            credentials: 'include',
-            parseJson: false,   
+            parseJson: false,  
+            useCsrf: true,  
         });
         return await req.patch(data);
     },
@@ -104,8 +110,8 @@ export default {
         const req = new Request({ 
             path: `/comment/${id}`,
             useAuth: true,
-            credentials: 'include',
             parseJson: false,  
+            useCsrf: true,
         });
         return await req.delete();
     },

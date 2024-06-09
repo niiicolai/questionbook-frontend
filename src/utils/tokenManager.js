@@ -32,9 +32,16 @@ export default class TokenManager {
         return JSON.parse(decodedPayload);
     }
 
-    getHeaders() {
+    getAuthHeader() {
         return {
             Authorization: `Bearer ${this.getToken()}`,
+        };
+    }
+
+    getCsrfHeader() {
+        const csrfToken = this.parseToken().csrfToken;
+        return {
+            'x-csrf-token': csrfToken,
         };
     }
 }

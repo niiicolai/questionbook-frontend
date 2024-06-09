@@ -87,12 +87,10 @@ export default async function createPage() {
         createToast({ message: 'Question not found', type: 'error', duration: 3000 });
         return;
     }
-
-    const questionUser = await api.user.find(question.userId);
-
+    
     document.getElementById('question-title').innerText = inputSanitizer.clean(question.title);
     document.getElementById('question-description').innerText = inputSanitizer.clean(question.description);
-    document.getElementById('question-user').innerText = questionUser.username;
+    document.getElementById('question-user').innerText = inputSanitizer.clean(question.username);
     document.getElementById('question-created-at').innerText = new Date(question.createdAt).toLocaleString();
     document.getElementById('question-updated-at').innerText = new Date(question.updatedAt).toLocaleString();
     document.getElementById('to-group-link').href = `/group/${question.groupId}`;
@@ -108,15 +106,14 @@ export default async function createPage() {
         isOwner = userId === question.userId;
         if (isOwner) {
             document.getElementById('delete-question-btn').addEventListener('click', () => deleteQuestion(questionId));
-            document.getElementById('edit-question-link').href = `/question/${group.id}/edit`;
+            document.getElementById('edit-question-link').href = `/question/${question.id}/edit`;
             document.getElementById('edit-question-link').classList.remove('hidden');
             document.getElementById('delete-question-btn').classList.remove('hidden');
         }
     }
 
     if (userId) {
-        const { rows } = await api.groupUser.findAll({ limit: 1, page: 1, groupId, userId });
-        const isMember = rows.length > 0;
+        const { isMember } = await api.group.isMember(groupId);
 
         document.getElementById('create-answer-link').classList.toggle('hidden', !isMember);
         document.getElementById('create-answer-link').href = `/answers/create?questionId=${questionId}`;

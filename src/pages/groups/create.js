@@ -14,6 +14,7 @@ export default function createPage() {
         const name = formData.get('name');
         const description = formData.get('description');
         const file = formData.get('file');
+        const isPrivate = formData.get('isPrivate') === 'on';
 
         if (!name) {
             createToast({ message: 'Name is required', type: 'error', duration: 3000 });
@@ -44,7 +45,8 @@ export default function createPage() {
             const groupResponse = await api.group.create({ 
                 name, 
                 description, 
-                coverUrl 
+                coverUrl,
+                isPrivate
             });
             const data = await groupResponse.json();
             const { group } = data;

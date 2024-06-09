@@ -12,7 +12,10 @@ export default {
     find: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/question/${id}` });
+        const req = new Request({ 
+            path: `/question/${id}`,
+            useSoftAuth: true, 
+        });
         return await req.get();
     },
 
@@ -33,8 +36,14 @@ export default {
             throw new Error('limit must be a number and greater than 0');
         if (isNaN(page) || page < 1)
             throw new Error('page must be a number and greater than 0');
-
-        const req = new Request({ path: `/questions?limit=${limit}&page=${page}` });
+        let path = `/questions?limit=${limit}&page=${page}`;
+        if (options.groupId) {
+            path += `&groupId=${options.groupId}`;
+        }
+        const req = new Request({ 
+            path,
+            useSoftAuth: true, 
+        });
         return await req.get();
     },
 
@@ -61,7 +70,7 @@ export default {
         const req = new Request({ 
             path: `/questions`,
             useAuth: true,
-            credentials: 'include',
+            useCsrf: true,
             parseJson: false, 
         });
         return await req.post(data);
@@ -86,7 +95,7 @@ export default {
         const req = new Request({ 
             path: `/question/${id}`,
             useAuth: true,
-            credentials: 'include',
+            useCsrf: true,
             parseJson: false,  
         });
         return await req.patch(data);
@@ -106,7 +115,7 @@ export default {
         const req = new Request({ 
             path: `/question/${id}`,
             useAuth: true,
-            credentials: 'include',
+            useCsrf: true,
             parseJson: false,  
         });
         return await req.delete();

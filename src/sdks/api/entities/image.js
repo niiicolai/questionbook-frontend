@@ -47,7 +47,7 @@ export default {
             useAuth: true, 
             parseJson: false,
             stringifyBody: false,
-            credentials: 'include',
+            useCsrf: true,
         });
         return await req.put(formData);
     },
@@ -63,7 +63,11 @@ export default {
     delete: async function (filename) {
         if (!filename) throw new Error('filename is required');
 
-        const req = new Request({ path: `/image/${filename}`, useAuth: true });
+        const req = new Request({ 
+            path: `/image/${filename}`, 
+            useAuth: true,
+            useCsrf: true, 
+        });
         return await req.delete();
     },
 };

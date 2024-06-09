@@ -4,6 +4,7 @@ import createGroup from './pages/groups/create.js';
 import editGroup from './pages/groups/edit.js';
 import indexGroup from './pages/groups/index.js';
 import showGroup from './pages/groups/show.js';
+import userGroups from './pages/groups/userGroups.js';
 
 import createQuestion from './pages/questions/create.js';
 import editQuestion from './pages/questions/edit.js';
@@ -15,6 +16,7 @@ import showAnswer from './pages/answers/show.js';
 
 import createComment from './pages/comments/create.js';
 import editComment from './pages/comments/edit.js';
+import deleteComment from './pages/comments/delete.js';
 
 import createUser from './pages/users/create.js';
 import editUser from './pages/users/edit.js';
@@ -34,6 +36,7 @@ router.on('/groups', indexGroup);
 router.on('/groups/create', createGroup);
 router.on('/group/:id/edit', editGroup);
 router.on('/group/:id', showGroup);
+router.on('/user/groups', userGroups);
 
 router.on('/questions/create', createQuestion);
 router.on('/question/:id/edit', editQuestion);
@@ -45,6 +48,7 @@ router.on('/answer/:id', showAnswer);
 
 router.on('/comments/create', createComment);
 router.on('/comment/:id/edit', editComment);
+router.on('/comment/:id/delete', deleteComment);
 
 router.on('/users/create', createUser);
 router.on('/user/edit', editUser);

@@ -46,7 +46,7 @@ const requestMethod = ({ method, outputId, pgPrefix, listTemplate, onEmpty, onIt
 
 const questionPaginator = new Paginator({
     requestMethod: requestMethod({
-        method: api.question.findAll,
+        method: async (o) => await api.question.findAll({ ...o, groupId }),
         outputId: 'questions',
         pgPrefix: 'pg-question',
         listTemplate: questionListItemTemplate,
@@ -135,8 +135,7 @@ export default async function createPage() {
     }
 
     if (userId) {
-        const { rows } = await api.groupUser.findAll({ limit: 1, page: 1, groupId, userId });
-        const isMember = rows.length > 0;
+        const { isMember } = await api.group.isMember(groupId);
         const showJoinBtn = !isMember && !isOwner;
         const showLeaveBtn = isMember && !isOwner;
         if (showJoinBtn) {
@@ -159,6 +158,7 @@ export default async function createPage() {
     document.getElementById('group-cover-image').src = imageBase64;
     document.getElementById('group-name').innerText = inputSanitizer.clean(group.name);
     document.getElementById('group-description').innerText = inputSanitizer.clean(group.description);
+    document.getElementById('is-private-badge').classList.toggle('hidden', !group.isPrivate);
 
     questionPaginator.fetch();
     memberPaginator.fetch();

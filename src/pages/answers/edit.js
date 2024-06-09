@@ -18,7 +18,7 @@ export default async function createPage() {
     }
     form.description.value = answer.description;
 
-    document.getElementById('back-link').href = '/question/' + answer.questionId;
+    document.getElementById('back-link').href = '/answer/' + answer.id;
     
     form.addEventListener('submit', async (event) => {
         event.preventDefault();

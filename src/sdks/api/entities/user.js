@@ -58,7 +58,10 @@ export default {
         if (!data.email) throw new Error('email is required');
         if (!data.password) throw new Error('password is required');
 
-        const req = new Request({ path: `/users`, parseJson: false });
+        const req = new Request({ 
+            path: `/users`, 
+            parseJson: false 
+        });
         return await req.post(data);
     },
 
@@ -80,7 +83,7 @@ export default {
             path: `/user`,
             parseJson: false,
             useAuth: true,
-            credentials: 'include', 
+            useCsrf: true, 
         });
         return await req.patch(data);
     },
@@ -96,7 +99,7 @@ export default {
             path: `/user`,
             parseJson: false,
             useAuth: true,
-            credentials: 'include', 
+            useCsrf: true, 
         });
         return await req.delete();
     },

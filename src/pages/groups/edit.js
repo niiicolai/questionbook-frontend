@@ -33,8 +33,7 @@ export default async function createPage() {
         const name = formData.get('name');
         const description = formData.get('description');
         const file = formData.get('file');
-        let isPrivate = formData.get('isPrivate');
-        isPrivate = isPrivate === 'on' ? 1 : 0;
+        const isPrivate = formData.get('isPrivate') === 'on';
 
         try {
             // Upload image

@@ -12,13 +12,26 @@ export default {
     find: async function (id) {
         if (!id) throw new Error('id is required');
 
-        const req = new Request({ path: `/group/${id}` });
+        const req = new Request({ 
+            path: `/group/${id}`,
+            useSoftAuth: true, 
+        });
+        return await req.get();
+    },
+
+    isMember: async function (id) {
+        if (!id) throw new Error('id is required');
+
+        const req = new Request({ 
+            path: `/is-member/group/${id}`,
+            useAuth: true, 
+        });
         return await req.get();
     },
 
     /**
      * @function findAll
-     * @description Find all groups
+     * @description Find all public groups
      * @param {Object} options
      * @param {number} options.limit
      * @param {number} options.page
@@ -34,7 +47,35 @@ export default {
         if (isNaN(page) || page < 1)
             throw new Error('page must be a number and greater than 0');
 
-        const req = new Request({ path: `/groups?limit=${limit}&page=${page}` });
+        const req = new Request({ 
+            path: `/groups?limit=${limit}&page=${page}`,
+            useSoftAuth: true, 
+        });
+        return await req.get();
+    },
+
+    /**
+     * @function findAllUserGroups
+     * @description Find all groups for a user
+     * @param {Object} options
+     * @param {number} options.limit
+     * @param {number} options.page
+     * @returns {Promise}
+     * @async
+     * @throws {Error} limit must be a number and greater than 0
+     * @throws {Error} page must be a number and greater than 0
+     */
+    findAllUserGroups: async function (options={}) {
+        const { limit, page } = options;
+        if (isNaN(limit) || limit < 1) 
+            throw new Error('limit must be a number and greater than 0');
+        if (isNaN(page) || page < 1)
+            throw new Error('page must be a number and greater than 0');
+
+        const req = new Request({ 
+            path: `/groups/user?limit=${limit}&page=${page}`,
+            useAuth: true, 
+        });
         return await req.get();
     },
 
@@ -65,7 +106,7 @@ export default {
             path: `/groups`, 
             parseJson: false, 
             useAuth: true,
-            credentials: 'include',
+            useCsrf: true,
         });
         return await req.post(data);
     },
@@ -92,7 +133,7 @@ export default {
             path: `/group/${id}`, 
             parseJson: false, 
             useAuth: true,
-            credentials: 'include',
+            useCsrf: true,
         });
         return await req.patch(data);
     },
@@ -112,7 +153,7 @@ export default {
             path: `/group/${id}`, 
             parseJson: false, 
             useAuth: true,
-            credentials: 'include', 
+            useCsrf: true, 
         });
         return await req.delete();
     },

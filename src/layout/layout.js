@@ -6,6 +6,12 @@ clone.innerHTML = layout;
 
 const tokenManager = new TokenManager();
 if (tokenManager.hasToken()) {
+    const liUserGroups = document.createElement('li');
+    liUserGroups.innerHTML = '<a href="/user/groups" class="text-blue-500 hover:underline">My Groups</a>';
+
+    const liCreateGroup = document.createElement('li');
+    liCreateGroup.innerHTML = '<a href="/groups/create" class="text-blue-500 hover:underline">Create Group</a>';
+
     const liProfile = document.createElement('li');
     liProfile.innerHTML = '<a href="/user/edit" class="text-blue-500 hover:underline">Edit Profile</a>';
     
@@ -16,6 +22,8 @@ if (tokenManager.hasToken()) {
     const parsedToken = tokenManager.parseToken();
     liUsername.innerHTML = `<p class="text-black">Signed in as ${parsedToken.username}</p>`;
     
+    clone.querySelector('#navigation').appendChild(liUserGroups);
+    clone.querySelector('#navigation').appendChild(liCreateGroup);
     clone.querySelector('#navigation').appendChild(liProfile);
     clone.querySelector('#navigation').appendChild(liLogout);
     clone.querySelector('#navigation').appendChild(liUsername);

@@ -1,7 +1,13 @@
 <div class="p-6 flex flex-col gap-3">
     <div class="relative border border-gray-300 rounded-md overflow-hidden">
         <img id="group-cover-image" class="w-full h-72 object-cover" src="" alt="Group Cover Image">
-        <h2 id="group-name" class="absolute left-3 bottom-3 text-4xl p-1 rounded-md text-black font-bold"></h2>
+
+        <div class="absolute left-3 bottom-3 flex flex-col gap-3">
+            <h2 id="group-name" class="text-4xl rounded-md text-black font-bold"></h2>
+            <p id="is-private-badge" class="hidden w-28 text-center bg-slate-500 text-white rounded-md px-2 py-1 text-xs font-bold flex items-center justify-center">
+                Private group
+            </p>
+        </div>
     </div>
 
     <div class="p-6 border border-gray-300 rounded-md flex items-center justify-between gap-3">
@@ -9,11 +15,13 @@
             <p id="group-description"></p>
         </div>
 
-        <div id="group-actions" class="hidden flex gap-3">
-            <a id="edit-group-link" href="#" class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2">Edit
-                group</a>
-            <button id="delete-group-btn" class="bg-red-500 hover:bg-red-600 text-white rounded-md p-2">Delete
-                group</button>
+        <div id="group-actions" class="hidden flex gap-3">            
+            <a id="edit-group-link" href="#" class="bg-blue-500 hover:bg-blue-600 text-white rounded-md p-2">
+                Edit group
+            </a>
+            <button id="delete-group-btn" class="bg-red-500 hover:bg-red-600 text-white rounded-md p-2">
+                Delete group
+            </button>
         </div>
     </div>
 

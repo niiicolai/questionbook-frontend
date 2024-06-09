@@ -64,7 +64,7 @@ export default {
         const req = new Request({ 
             path: `/group_users`,
             useAuth: true,
-            credentials: 'include',
+            useCsrf: true,
             parseJson: false, 
         });
         return await req.post(data);
@@ -89,7 +89,7 @@ export default {
         const req = new Request({ 
             path: `/group_user/${id}`,
             useAuth: true,
-            credentials: 'include',
+            useCsrf: true,
             parseJson: false, 
         });
         return await req.put(data);
@@ -110,7 +110,7 @@ export default {
             path: `/group_user/${id}`,
             parseJson: false,
             useAuth: true,
-            credentials: 'include', 
+            useCsrf: true, 
         });
         return await req.delete();
     },

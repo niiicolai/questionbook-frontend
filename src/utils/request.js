@@ -7,18 +7,34 @@ export function setTokenManager(manager) {
 const serverUrl = import.meta.env.VITE_API_URL;
 
 export default class Request {
-    constructor({path, parseJson=true, stringifyBody=true, credentials=null, useAuth=false}) {
+    constructor({path, parseJson=true, stringifyBody=true, credentials=null, useAuth=false, useCsrf=false, useSoftAuth=false}) {
         this.path = `${serverUrl}${path}`;
         this.parseJson = parseJson;
         this.stringifyBody = stringifyBody;
         this.credentials = credentials;
+        this.headers = {};
+
+        if (useCsrf) {
+            this.headers = {
+                ...this.headers,
+                ...tokenManager.getCsrfHeader(),
+            };
+        }
 
         if (useAuth) {
             this.headers = {
-                ...tokenManager.getHeaders(),
+                ...this.headers,
+                ...tokenManager.getAuthHeader(),
             };
-        } else {
-            this.headers = {};
+        } else if (useSoftAuth) {
+            // Only add auth header if token exists
+            const token = tokenManager.getToken();
+            if (token) {
+                this.headers = {
+                    ...this.headers,
+                    ...tokenManager.getAuthHeader(),
+                };
+            }
         }
     }
 
